@@ -1,4 +1,4 @@
-# SpringRestfulDBExample
+# ITProjektBackEnd
 
 # Install
 - Clone Repository : `$ git clone https://github.com/Fendorr/ITProjektBackEnd.git`
