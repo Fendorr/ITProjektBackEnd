@@ -9,17 +9,19 @@ import java.util.Date;
 
 @Service
 public class ProjectMapper {
-    public Project dtoToEntity(ProjectDTO proj){
+
+    public Project dtoToEntity(ProjectDTO projDto){
         Project result = new Project();
-        result.setComment(proj.getComment());
+        result.setComment(projDto.getComment());
         result.setCreatedAt(new Date());
-        result.setNote(proj.getNote());
-        result.setTitle(proj.getTitle());
-        result.setCreatedBy(proj.getCreatedBy());
-        result.setSubTitle(proj.getSubTitle());
+        result.setNote(projDto.getNote());
+        result.setTitle(projDto.getTitle());
+        result.setCreatedBy(projDto.getCreatedBy());
+        result.setSubTitle(projDto.getSubTitle());
         return result;
 
     }
+
     public ProjectDTO entityToDto(Project proj){
         ProjectDTO result = new ProjectDTO();
         result.setComment(proj.getComment());
@@ -31,5 +33,4 @@ public class ProjectMapper {
         result.setId(proj.getId());
         return result;
     }
-
 }

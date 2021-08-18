@@ -20,7 +20,8 @@ import java.util.stream.StreamSupport;
 public class ProjectService {
 
     @Autowired
-     ProjectRepo myProjectRepo;
+    ProjectRepo myProjectRepo;
+
     @Autowired
     ProjectMapper projectMapper;
 
@@ -28,6 +29,7 @@ public class ProjectService {
         Project createdItem = myProjectRepo.save(projectMapper.dtoToEntity(project));
         return new URI("localhost:8080/api/project/" +createdItem.getId());
     }
+
     public void deleteProject(Long id) {
         if(myProjectRepo.existsById(id)) {
             myProjectRepo.deleteById(id);
@@ -41,13 +43,14 @@ public class ProjectService {
         Project projectToUpdate = projectMapper.dtoToEntity(project);
         projectToUpdate.setId(id); // Durch setzen der Id weiß das Repo welcher Eintrag upgedated werden soll
         myProjectRepo.save(projectToUpdate);
-
     }
+
     public ProjectDTO getProjectById(Long id) {
         // wemm er kein Projekt Findet Exception werfen ( Controller fängt diese dann)
         Project foundProject = myProjectRepo.findById(id).orElseThrow(RuntimeException::new);
         return projectMapper.entityToDto(foundProject);
     }
+
     public Collection<ProjectDTO> getProjects()  {
         Iterable<Project> foundProjects = myProjectRepo.findAll();
         return StreamSupport.stream(foundProjects.spliterator(), false) //TODO schaut euch fürs Verständniss die Java Streaming API an :)
