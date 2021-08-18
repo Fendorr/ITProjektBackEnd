@@ -7,6 +7,10 @@ import javax.persistence.Id;
 
 import java.util.Date;
 
+enum userType {
+    student, professor, admin
+}
+
 @Entity
 public class User {
 
@@ -20,9 +24,7 @@ public class User {
     String password; //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
     Date createdAt;
-    Character userType; //! s = student, p = professor, a = admin
-    Boolean isAuthor = false;
-    String[] likedProjects;
+    userType type; //! s = student, p = professor, a = admin
     Long activeProject; //! -> Fremdschlüssel project_id
 
     //region Getter/Setter
