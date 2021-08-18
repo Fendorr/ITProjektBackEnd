@@ -16,7 +16,14 @@ public class User {
 
     String firstName;
     String lastName;
+    String eMail;
+    String Password; //! pw muss gehashed und gesalted sein -> wsl im DTO
+    String faculty;
     Date createdAt;
+    // Char userType; //! s = student, p = professor, a = admin
+    Boolean isAuthor = false;
+    String[] likedProjects;
+    Long activeProject; //! -> Fremdschlüssel project_id
 
     //region Getter/Setter
     public String getFirstName() {
