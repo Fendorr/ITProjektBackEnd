@@ -20,7 +20,7 @@ public class User {
     String Password; //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
     Date createdAt;
-    // Char userType; //! s = student, p = professor, a = admin
+    Char userType; //! s = student, p = professor, a = admin
     Boolean isAuthor = false;
     String[] likedProjects;
     Long activeProject; //! -> Fremdschlüssel project_id
