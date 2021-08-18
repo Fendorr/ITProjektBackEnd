@@ -7,10 +7,6 @@ import javax.persistence.Id;
 
 import java.util.Date;
 
-enum userType {
-    student, professor, admin
-}
-
 @Entity
 public class User {
 
