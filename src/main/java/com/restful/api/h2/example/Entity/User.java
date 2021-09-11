@@ -17,11 +17,12 @@ public class User {
     String firstName;
     String lastName;
     String eMail;
-    String password; //! pw muss gehashed und gesalted sein -> wsl im DTO
+    String password;        //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
     Date createdAt;
-    userType type; //! s = student, p = professor, a = admin
-    Long activeProject; //! -> Fremdschlüssel project_id
+
+    userType type;          //! s = student, p = professor
+    Long activeProject;     //! -> Fremdschlüssel project_id
 
     //region Getter/Setter
     public String getFirstName() {
@@ -40,12 +41,52 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public userType getType() {
+        return type;
+    }
+
+    public void setType(userType type) {
+        this.type = type;
+    }
+
+    public Long getActiveProject() {
+        return activeProject;
+    }
+
+    public void setActiveProject(Long activeProject) {
+        this.activeProject = activeProject;
     }
 
     public Long getId() {
