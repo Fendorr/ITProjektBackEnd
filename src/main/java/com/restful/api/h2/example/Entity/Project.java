@@ -21,6 +21,7 @@ public class Project {
     String createdBy;
     String comment;
     String note;
+    Long adminID;       //UserID des Admins
 
 
     public String getTitle() {
@@ -69,6 +70,14 @@ public class Project {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Long getAdmin() {
+        return adminID;
+    }
+
+    public void setAdmin(Long admin) {
+        this.adminID = adminID;
     }
 
     public Long getId() {
