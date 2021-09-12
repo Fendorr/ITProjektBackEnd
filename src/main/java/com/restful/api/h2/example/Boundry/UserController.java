@@ -19,7 +19,7 @@ public class UserController {
     UserService service;
 
     @GetMapping(path = "user/{id}")
-    public ResponseEntity<UserDTO> getProjectById(@PathVariable(name="id") Long id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable(name="id") Long id){
         try {
             return ResponseEntity.ok(service.getUserById(id));
         }
@@ -28,7 +28,7 @@ public class UserController {
         }
     }
     @GetMapping(path = "user/")
-    public ResponseEntity<Collection<UserDTO>> getAllProjects(){
+    public ResponseEntity<Collection<UserDTO>> getAllUsers(){
         try {
             return ResponseEntity.ok(service.getUsers());
         }
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping(path = "user/")
-    public ResponseEntity<URI> postProject (@RequestBody UserDTO userDto) throws URISyntaxException {
+    public ResponseEntity<URI> postUser (@RequestBody UserDTO userDto) throws URISyntaxException {
         try {
             return ResponseEntity.ok(service.postUser(userDto));
         }
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "user/{id}")
-    public ResponseEntity<Void> deleteProject (@PathVariable(name="id") Long id){
+    public ResponseEntity<Void> deleteUser (@PathVariable(name="id") Long id){
         try {
             service.deleteUser(id);
             return ResponseEntity.noContent().build();
@@ -58,7 +58,7 @@ public class UserController {
         }
     }
     @PutMapping(path = "user/{id}")
-    public ResponseEntity<Void> updateProject (@PathVariable(name="id") Long id, @RequestBody UserDTO user){
+    public ResponseEntity<Void> updateUser (@PathVariable(name="id") Long id, @RequestBody UserDTO user){
         try {
             service.updateUser(id,user);
             return ResponseEntity.ok().build();

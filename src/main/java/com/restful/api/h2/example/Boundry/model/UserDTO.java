@@ -2,6 +2,7 @@ package com.restful.api.h2.example.Boundry.model;
 
 
 
+import com.restful.api.h2.example.Entity.userType;
 import java.util.Date;
 
 
@@ -12,6 +13,8 @@ public class UserDTO {
     String firstName;
     String lastName;
     Date createdAt;
+    String email;
+    userType type;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -44,6 +47,22 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public userType getType() {
+        return type;
+    }
+
+    public void setType(userType type) {
+        this.type = type;
     }
     //endregion
 }
