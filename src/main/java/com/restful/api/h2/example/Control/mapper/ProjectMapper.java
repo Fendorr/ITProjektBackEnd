@@ -18,6 +18,9 @@ public class ProjectMapper {
         result.setTitle(projDto.getTitle());
         result.setCreatedBy(projDto.getCreatedBy());
         result.setSubTitle(projDto.getSubTitle());
+        result.setTags(projDto.getTags());
+        result.setMaxUser(projDto.getMaxUser());
+        result.setCurrUser(projDto.getCurrUser());
         return result;
 
     }
@@ -31,6 +34,9 @@ public class ProjectMapper {
         result.setCreatedBy(proj.getCreatedBy());
         result.setSubTitle(proj.getSubTitle());
         result.setId(proj.getId());
+        result.setTags(proj.getTags());
+        result.setMaxUser(proj.getMaxUser());
+        result.setCurrUser(proj.getCurrUser());
         return result;
     }
 }

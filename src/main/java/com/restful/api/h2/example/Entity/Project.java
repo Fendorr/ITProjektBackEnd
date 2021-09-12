@@ -22,6 +22,9 @@ public class Project {
     String comment;
     String note;
     Long adminID;       //UserID des Admins
+    String[] tags;      //Keywords
+    Integer maxUser;    //Maximale Mitglieder
+    Integer currUser;   //Mitglieder aktuell
 
 
     public String getTitle() {
@@ -86,5 +89,29 @@ public class Project {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public Integer getMaxUser() {
+        return maxUser;
+    }
+
+    public void setMaxUser(Integer maxUser) {
+        this.maxUser = maxUser;
+    }
+
+    public Integer getCurrUser() {
+        return currUser;
+    }
+
+    public void setCurrUser(Integer currUser) {
+        this.currUser = currUser;
     }
 }
