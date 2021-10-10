@@ -10,11 +10,16 @@ public class UserDTO {
 
     Long id;
 
+    Date createdAt;
     String firstName;
     String lastName;
-    Date createdAt;
     String email;
-    userType type;
+
+    String password;    //! pw muss gehashed und gesalted sein -> wsl im DTO
+    String faculty;
+
+    userType type;          //! s = student, p = professor
+    Long activeProject;     //! -> Fremdschlüssel project_id
 
     //region Getter/Setter
     public String getFirstName() {
@@ -64,5 +69,30 @@ public class UserDTO {
     public void setType(userType type) {
         this.type = type;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public Long getActiveProject() {
+        return activeProject;
+    }
+
+    public void setActiveProject(Long activeProject) {
+        this.activeProject = activeProject;
+    }
+
     //endregion
 }

@@ -2,6 +2,7 @@ package com.restful.api.h2.example.Control.mapper;
 
 import com.restful.api.h2.example.Boundry.model.UserDTO;
 import com.restful.api.h2.example.Entity.User;
+import com.restful.api.h2.example.Entity.userType;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -14,6 +15,11 @@ public class UserMapper {
         result.setFirstName(userDto.getFirstName());
         result.setLastName(userDto.getLastName());
         result.setCreatedAt(new Date());
+        result.setEmail(userDto.getEmail());
+        result.setPassword(userDto.getPassword());
+        result.setFaculty(userDto.getFaculty());
+        result.setType(userDto.getType());
+        result.setActiveProject(userDto.getActiveProject());
         return result;
 
     }
@@ -24,6 +30,11 @@ public class UserMapper {
         result.setLastName(user.getLastName());
         result.setCreatedAt(user.getCreatedAt());
         result.setId(user.getId());
+        result.setEmail(user.getEmail());
+        result.setPassword(user.getPassword());
+        result.setFaculty(user.getFaculty());
+        result.setType(user.getType());
+        result.setActiveProject(user.getActiveProject());
         return result;
     }
 }
