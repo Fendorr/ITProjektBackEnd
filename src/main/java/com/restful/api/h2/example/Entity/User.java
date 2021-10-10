@@ -14,12 +14,13 @@ public class User {
     @GeneratedValue
     Long id;
 
+    Date createdAt;
     String firstName;
     String lastName;
-    String eMail;
+    String email;
+
     String password;        //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
-    Date createdAt;
 
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
@@ -41,12 +42,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String geteMail() {
-        return eMail;
+    public String getEmail() {
+        return email;
     }
 
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
+    public void setEmail(String eMail) {
+        this.email = email;
     }
 
     public String getPassword() {
