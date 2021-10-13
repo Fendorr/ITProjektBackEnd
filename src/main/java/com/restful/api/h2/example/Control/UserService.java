@@ -6,6 +6,9 @@ import com.restful.api.h2.example.Control.mapper.UserMapper;
 import com.restful.api.h2.example.Entity.User;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo myUserRepo;
@@ -55,5 +58,12 @@ public class UserService {
         return StreamSupport.stream(foundUsers.spliterator(), false)
                 .map(user -> userMapper.entityToDto(user))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User userCredentials =
+                myUserRepo.findByEmail(username);
+        return userMapper.entityToDto(userCredentials);
     }
 }
