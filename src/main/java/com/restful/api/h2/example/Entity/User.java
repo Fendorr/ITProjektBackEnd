@@ -50,7 +50,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    public void setEmail(String eMail) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -100,6 +100,7 @@ public class User implements UserDetails {
     //endregion
 
 
+    //TODO
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

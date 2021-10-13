@@ -64,6 +64,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User userCredentials =
                 myUserRepo.findByEmail(s);
-        return userMapper.entityToDto(userCredentials);
+        return userCredentials;
     }
 }
