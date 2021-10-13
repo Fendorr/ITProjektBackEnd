@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User userCredentials =
-                myUserRepo.findByEmail(username);
+                myUserRepo.findByEmail(s);
         return userMapper.entityToDto(userCredentials);
     }
 }
