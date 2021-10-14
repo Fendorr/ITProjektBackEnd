@@ -25,18 +25,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication()
-                .withUser("blah")
+        auth.authenticationProvider(daoAuthenticationProvider())
+                .inMemoryAuthentication()
+                .withUser("blah@web.de")
                 .password(passwordEncoder().encode("blah"))
                 .roles("ADMIN");
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .and().formLogin();
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http.authorizeRequests()
+//                .antMatchers("/**").permitAll()
+//                .and().formLogin();
+//    }
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/**").permitAll()
+//                .antMatchers("/console/**").permitAll();
+//
+//        http.csrf().disable();
+//        http.headers().frameOptions().disable();
+//    }
+
+    //TODO Hashing bei PostUser testen (mit klartext pw - wird es gehashed abgelegt?)
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
