@@ -49,8 +49,8 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO getUserById(Long id) {
-        User foundProject = myUserRepo.findById(id).orElseThrow(RuntimeException::new);
-        return userMapper.entityToDto(foundProject);
+        User foundUser = myUserRepo.findById(id).orElseThrow(RuntimeException::new);
+        return userMapper.entityToDto(foundUser);
     }
 
     public Collection<UserDTO> getUsers()  {
@@ -62,8 +62,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User userCredentials =
-                myUserRepo.findByEmail(s);
+        User userCredentials = myUserRepo.findByEmail(s);
         return userCredentials;
     }
 }
