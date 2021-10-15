@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -29,6 +30,10 @@ public class UserService implements UserDetailsService {
     UserMapper userMapper;
 
     public URI postUser(UserDTO userDto) throws URISyntaxException {
+        User userWithDuplicateEmail = myUserRepo.findByEmail(userDto.getEmail());
+        if (myUserRepo.existsByEmail(userWithDuplicateEmail.getEmail())){   //TODO Fabi fragen
+            throw new RuntimeException();
+        }
         User createdItem = myUserRepo.save(userMapper.dtoToEntity(userDto));
         return new URI("localhost:8080/api/user/" +createdItem.getId());
     }

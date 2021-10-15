@@ -49,7 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.headers().frameOptions().disable();
 //    }
 
-    //TODO Hashing bei PostUser testen (mit klartext pw - wird es gehashed abgelegt?)
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/login").permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .httpBasic();
+//    }
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
