@@ -3,12 +3,16 @@ package com.restful.api.h2.example.Boundry;
 
 import com.restful.api.h2.example.Boundry.model.UserDTO;
 import com.restful.api.h2.example.Control.UserService;
+import com.restful.api.h2.example.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
+import java.util.Base64;
 import java.util.Collection;
 
 @RestController
@@ -27,6 +31,7 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
+
     @GetMapping(path = "user/")
     public ResponseEntity<Collection<UserDTO>> getAllUsers(){
         try {
@@ -57,14 +62,30 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping(path = "user/{id}")
-    public ResponseEntity<Void> updateUser (@PathVariable(name="id") Long id, @RequestBody UserDTO user){
+    public ResponseEntity<Void> updateUser (@PathVariable(name="id") Long id, @RequestBody UserDTO userDto){
         try {
-            service.updateUser(id,user);
+            service.updateUser(id,userDto);
             return ResponseEntity.ok().build();
         }
         catch(Exception e ) {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @RequestMapping("/login")
+    public boolean login(@RequestBody User user) {
+        return
+                user.getEmail().equals("blah@web.de") && user.getPassword().equals("{bcrypt}blah");
+    }
+
+    @RequestMapping("/authUser")
+    public Principal user(HttpServletRequest request) {
+        String authToken = request.getHeader("Authorization")
+                .substring("Basic".length()).trim();
+        return () ->  new String(Base64.getDecoder()
+                .decode(authToken)).split(":")[0];
+    }
+
 }
