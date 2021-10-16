@@ -21,7 +21,7 @@ public class UserMapper {
         result.setLastName(userDto.getLastName());
         result.setCreatedAt(new Date());
         result.setEmail(userDto.getEmail());
-        result.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        //result.setPassword(passwordEncoder.encode(userDto.getPassword()));
         result.setFaculty(userDto.getFaculty());
         result.setType(userDto.getType());
         result.setActiveProject(userDto.getActiveProject());
@@ -35,7 +35,6 @@ public class UserMapper {
         result.setCreatedAt(user.getCreatedAt());
         result.setId(user.getId());
         result.setEmail(user.getEmail());
-        result.setPassword(user.getPassword());
         result.setFaculty(user.getFaculty());
         result.setType(user.getType());
         result.setActiveProject(user.getActiveProject());

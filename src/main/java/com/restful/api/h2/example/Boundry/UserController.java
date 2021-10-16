@@ -42,10 +42,10 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "user/")
-    public ResponseEntity<URI> postUser (@RequestBody UserDTO userDto) throws URISyntaxException {
+    @PostMapping(path = "user/{pw}")
+    public ResponseEntity<URI> postUser (@RequestBody UserDTO userDto, @PathVariable(name="pw") String pw ) throws URISyntaxException {
         try {
-            return ResponseEntity.ok(service.postUser(userDto));
+            return ResponseEntity.ok(service.postUser(userDto, pw));
         }
         catch(Exception e){
             return ResponseEntity.badRequest().build();
@@ -72,20 +72,6 @@ public class UserController {
         catch(Exception e ) {
             return ResponseEntity.badRequest().build();
         }
-    }
-
-    @RequestMapping("/login")
-    public boolean login(@RequestBody User user) {
-        return
-                user.getEmail().equals("blah@web.de") && user.getPassword().equals("{bcrypt}blah");
-    }
-
-    @RequestMapping("/authUser")
-    public Principal user(HttpServletRequest request) {
-        String authToken = request.getHeader("Authorization")
-                .substring("Basic".length()).trim();
-        return () ->  new String(Base64.getDecoder()
-                .decode(authToken)).split(":")[0];
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -29,12 +30,21 @@ public class UserService implements UserDetailsService {
     @Autowired
     UserMapper userMapper;
 
-    public URI postUser(UserDTO userDto) throws URISyntaxException {
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    public URI postUser(UserDTO userDto, String password) throws URISyntaxException {
+
+        //Prüfe ob User bereits existiert
         User userWithDuplicateEmail = myUserRepo.findByEmail(userDto.getEmail());
-        if (myUserRepo.existsByEmail(userWithDuplicateEmail.getEmail())){   //TODO Fabi fragen
+        if (myUserRepo.existsByEmail(userWithDuplicateEmail.getEmail())){
             throw new RuntimeException();
         }
-        User createdItem = myUserRepo.save(userMapper.dtoToEntity(userDto));
+
+        User user = userMapper.dtoToEntity(userDto);
+        user.setPassword(passwordEncoder.encode(password)); //passwort explizit hier setzen, sodass es nicht im Dto vorhanden ist
+        User createdItem = myUserRepo.save(user);
+
         return new URI("localhost:8080/api/user/" +createdItem.getId());
     }
 
@@ -67,7 +77,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User userCredentials = myUserRepo.findByEmail(s);
+        User userCredentials = myUserRepo.findByEmail(s); //TODO CheckPassword (matches)
         return userCredentials;
     }
 }

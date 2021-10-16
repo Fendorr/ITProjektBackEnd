@@ -9,8 +9,17 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -49,16 +58,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.headers().frameOptions().disable();
 //    }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/login").permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .httpBasic();
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/login").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+    }
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {
@@ -67,5 +76,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(this.userService);
         return provider;
+    }
+
+    private AuthenticationSuccessHandler successHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
+                                                HttpServletResponse httpServletResponse, Authentication authentication)
+                    throws IOException, ServletException {
+                httpServletResponse.getWriter().append("OK");
+                httpServletResponse.setStatus(200);
+            }
+        };
+    }
+
+    private AuthenticationFailureHandler failureHandler() {
+        return new AuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
+                                                HttpServletResponse httpServletResponse, AuthenticationException e)
+                    throws IOException, ServletException {
+                httpServletResponse.getWriter().append("Authentication failure");
+                httpServletResponse.setStatus(401);
+            }
+        };
     }
 }
