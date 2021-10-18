@@ -42,16 +42,6 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "user/{pw}")
-    public ResponseEntity<URI> postUser (@RequestBody UserDTO userDto, @PathVariable(name="pw") String pw ) throws URISyntaxException {
-        try {
-            return ResponseEntity.ok(service.postUser(userDto, pw));
-        }
-        catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
     @DeleteMapping(path = "user/{id}")
     public ResponseEntity<Void> deleteUser (@PathVariable(name="id") Long id){
         try {

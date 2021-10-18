@@ -13,4 +13,7 @@ spring:
     show-sql: true
     database-plattform: org.hibernate.dialect.H2Dialect
     generate-ddl: true
+  security:
+    ignored:
+      - "*.bundle.*"
 

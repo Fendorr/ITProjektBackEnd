@@ -2,17 +2,18 @@ package com.restful.api.h2.example.Boundry;
 
 import com.restful.api.h2.example.Boundry.model.LoginDTO;
 import com.restful.api.h2.example.Boundry.model.ProjectDTO;
+import com.restful.api.h2.example.Boundry.model.UserDTO;
+import com.restful.api.h2.example.Control.ProjectService;
 import com.restful.api.h2.example.Control.PublicService;
+import com.restful.api.h2.example.Control.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 
 @RestController
 @RequestMapping(path="api/")
@@ -20,12 +21,20 @@ public class PublicController {
 
     @Autowired
     @Lazy
-    PublicService service;
+    PublicService publicService;
+
+    @Autowired
+    @Lazy
+    UserService userService;
+
+    @Autowired
+    @Lazy
+    ProjectService projectService;
 
     @PostMapping(path = "login/")
     public ResponseEntity<URI> login (@RequestBody LoginDTO loginDto) throws URISyntaxException {
         try {
-            service.login(loginDto);
+            publicService.login(loginDto);
             return ResponseEntity.ok().build();
         }
         catch(Exception e){
@@ -33,6 +42,23 @@ public class PublicController {
         }
     }
 
-    //TODO move PostUser und getAllProjects
+    @PostMapping(path = "user/{pw}")
+    public ResponseEntity<URI> postUser (@RequestBody UserDTO userDto, @PathVariable(name="pw") String pw ) throws URISyntaxException {
+        try {
+            return ResponseEntity.ok(userService.postUser(userDto, pw));
+        }
+        catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
+    @GetMapping(path = "project/")
+    public ResponseEntity<Collection<ProjectDTO>> getAllProjects(){
+        try {
+            return ResponseEntity.ok(projectService.getProjects());
+        }
+        catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

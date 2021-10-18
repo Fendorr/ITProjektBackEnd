@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User userCredentials = myUserRepo.findByEmail(s); //TODO CheckPassword (matches)
+        User userCredentials = myUserRepo.findByEmail(s);
         return userCredentials;
     }
 }
