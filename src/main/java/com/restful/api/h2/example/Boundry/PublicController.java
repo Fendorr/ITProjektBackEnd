@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -32,14 +33,19 @@ public class PublicController {
     ProjectService projectService;
 
     @PostMapping(path = "login/")
-    public ResponseEntity<URI> login (@RequestBody LoginDTO loginDto) throws URISyntaxException {
+    public ResponseEntity<Boolean> login (@RequestBody LoginDTO loginDto) throws URISyntaxException {
         try {
-            publicService.login(loginDto);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(publicService.login(loginDto));
         }
         catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @ResponseBody
+    @GetMapping(path="curUser/")
+    public Principal user(Principal user) {
+        return user;
     }
 
     @PostMapping(path = "user/{pw}")

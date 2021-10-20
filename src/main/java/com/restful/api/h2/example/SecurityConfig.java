@@ -48,46 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("");
     }
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
-//                .and().formLogin();
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().httpBasic().and().authorizeRequests()
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/api/project/").permitAll()
+//                .antMatchers("/api/project/{id}").permitAll()
+                .antMatchers("/api/login/").permitAll()
                 .antMatchers("/console/**").permitAll()
                 .anyRequest().authenticated();
 
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+        //http.headers().frameOptions().disable();
     }
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-////        http.cors().and()
-////                .authorizeRequests()
-////                .antMatchers("/api/login").permitAll()
-////                .antMatchers("/console/**").permitAll()
-////                .anyRequest().authenticated();
-//
-//        http
-//                .httpBasic()
-//                .and()
-//                .authorizeRequests()
-//                .antMatchers("/api/login/", "/console/**").permitAll()
-//                .anyRequest().authenticated();
-//
-//
-//
-//        //hier einkommentieren um die console nutzen zu können
-//        //http.csrf().disable();
-//        //http.headers().frameOptions().disable();
-//    }
-
 
     @Bean
     public AuthenticationProvider daoAuthenticationProvider() {

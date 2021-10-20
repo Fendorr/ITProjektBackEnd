@@ -16,17 +16,11 @@ public class PublicService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
-    public void login(LoginDTO loginDto){
-
+    public boolean login(LoginDTO loginDto){
         User foundUser = myUserRepo.findByEmail(loginDto.getEmail());
         if (foundUser == null){
             throw new RuntimeException();
         }
-
-        boolean matches = passwordEncoder.matches(loginDto.getPassword(), foundUser.getPassword());
-        if (!matches){
-            throw new RuntimeException();
-        }
+        return passwordEncoder.matches(loginDto.getPassword(), foundUser.getPassword());
     }
 }
