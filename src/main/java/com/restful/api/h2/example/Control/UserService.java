@@ -15,9 +15,6 @@ import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -36,8 +33,7 @@ public class UserService implements UserDetailsService {
     public URI postUser(UserDTO userDto, String password) throws URISyntaxException {
 
         //Prüfe ob User bereits existiert
-        User userWithDuplicateEmail = myUserRepo.findByEmail(userDto.getEmail());
-        if (myUserRepo.existsByEmail(userWithDuplicateEmail.getEmail())){
+        if (myUserRepo.existsByEmail(userDto.getEmail())){
             throw new RuntimeException();
         }
 
@@ -77,7 +73,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User userCredentials = myUserRepo.findByEmail(s);
-        return userCredentials;
+        return myUserRepo.findByEmail(s);
     }
 }
