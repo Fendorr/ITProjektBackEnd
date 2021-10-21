@@ -6,18 +6,20 @@ import com.restful.api.h2.example.Control.mapper.UserMapper;
 import com.restful.api.h2.example.Entity.User;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo myUserRepo;
@@ -25,8 +27,20 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public URI postUser(UserDTO userDto) throws URISyntaxException {
-        User createdItem = myUserRepo.save(userMapper.dtoToEntity(userDto));
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    public URI postUser(UserDTO userDto, String password) throws URISyntaxException {
+
+        //Prüfe ob User bereits existiert
+        if (myUserRepo.existsByEmail(userDto.getEmail())){
+            throw new RuntimeException();
+        }
+
+        User user = userMapper.dtoToEntity(userDto);
+        user.setPassword(passwordEncoder.encode(password)); //passwort explizit hier setzen, sodass es nicht im Dto vorhanden ist
+        User createdItem = myUserRepo.save(user);
+
         return new URI("localhost:8080/api/user/" +createdItem.getId());
     }
 
@@ -46,8 +60,8 @@ public class UserService {
     }
 
     public UserDTO getUserById(Long id) {
-        User foundProject = myUserRepo.findById(id).orElseThrow(RuntimeException::new);
-        return userMapper.entityToDto(foundProject);
+        User foundUser = myUserRepo.findById(id).orElseThrow(RuntimeException::new);
+        return userMapper.entityToDto(foundUser);
     }
 
     public Collection<UserDTO> getUsers()  {
@@ -55,5 +69,10 @@ public class UserService {
         return StreamSupport.stream(foundUsers.spliterator(), false)
                 .map(user -> userMapper.entityToDto(user))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return myUserRepo.findByEmail(s);
     }
 }

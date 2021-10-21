@@ -27,15 +27,6 @@ public class ProjectController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping(path = "project/")
-    public ResponseEntity<Collection<ProjectDTO>> getAllProjects(){
-        try {
-            return ResponseEntity.ok(service.getProjects());
-        }
-        catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
     @PostMapping(path = "project/")
     public ResponseEntity<URI> postProject (@RequestBody ProjectDTO project) throws URISyntaxException {
@@ -57,6 +48,7 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping(path = "project/{id}")
     public ResponseEntity<Void> updateProject (@PathVariable(name="id") Long id, @RequestBody ProjectDTO project){
         try {

@@ -15,9 +15,7 @@ public class UserDTO {
     String lastName;
     String email;
 
-    String password;    //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
-
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
 
@@ -68,14 +66,6 @@ public class UserDTO {
 
     public void setType(userType type) {
         this.type = type;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFaculty() {
