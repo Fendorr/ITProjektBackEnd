@@ -42,10 +42,14 @@ public class PublicController {
         }
     }
 
-    @ResponseBody
     @GetMapping(path="curUser/")
-    public Principal user(Principal user) {
-        return user;
+    public ResponseEntity<UserDTO> currentUser() {
+        try{
+            return ResponseEntity.ok(publicService.getCurrentUser());
+        }
+        catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping(path = "user/{pw}")
