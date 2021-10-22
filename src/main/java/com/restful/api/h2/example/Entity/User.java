@@ -28,6 +28,7 @@ public class User implements UserDetails {
 
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
+    Long[] likedProjects;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -135,4 +136,13 @@ public class User implements UserDetails {
         return true;
     }
     //endregion
+
+    public Long[] getLikedProjects() {
+        return likedProjects;
+    }
+
+    public void setLikedProjects(Long[] likedProjects) {
+        this.likedProjects = likedProjects;
+    }
+
 }

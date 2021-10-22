@@ -18,6 +18,7 @@ public class UserDTO {
     String faculty;
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
+    Long[] likedProjects;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -82,6 +83,14 @@ public class UserDTO {
 
     public void setActiveProject(Long activeProject) {
         this.activeProject = activeProject;
+    }
+
+    public Long[] getLikedProjects() {
+        return likedProjects;
+    }
+
+    public void setLikedProjects(Long[] likedProjects) {
+        this.likedProjects = likedProjects;
     }
 
     //endregion
