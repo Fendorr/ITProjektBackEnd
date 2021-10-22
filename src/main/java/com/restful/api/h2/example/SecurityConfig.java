@@ -29,15 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.authenticationProvider(daoAuthenticationProvider())
-                .inMemoryAuthentication()
-                .withUser("blah@web.de")
-                .password(passwordEncoder().encode("blah"))
-                .roles("");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().httpBasic().and().authorizeRequests()
                 .antMatchers("/api/project/").permitAll()
@@ -46,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated();
 
         http.csrf().disable();
-        //http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable();
     }
 
     @Bean
