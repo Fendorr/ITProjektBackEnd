@@ -2,6 +2,7 @@ package com.restful.api.h2.example.Boundry.model;
 
 
 
+import javax.persistence.Column;
 import java.util.Date;
 
 
@@ -11,11 +12,20 @@ public class ProjectDTO {
     String subTitle;
     Date createdAt;
     String createdBy;
+
+    @Column(length=5000)
     String comment;
+
     String note;
+    Long adminId;       //UserID des Admins
+    Long professorId;
     String[] tags;      //Keywords
     Integer maxUser;    //Maximale Mitglieder
     Integer currUser;   //Mitglieder aktuell
+    Long[] members;     //Array der Member user_ids
+    Long[] projectLikes; //Array der user_ids die das Projekt geliked haben
+    Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
+
 
     public String getTitle() {
         return title;
@@ -65,7 +75,6 @@ public class ProjectDTO {
         this.note = note;
     }
 
-
     public Long getId() {
         return id;
     }
@@ -96,5 +105,45 @@ public class ProjectDTO {
 
     public void setCurrUser(Integer currUser) {
         this.currUser = currUser;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
+
+    public Long getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(Long professorId) {
+        this.professorId = professorId;
+    }
+
+    public Long[] getMembers() {
+        return members;
+    }
+
+    public void setMembers(Long[] members) {
+        this.members = members;
+    }
+
+    public Long[] getProjectLikes() {
+        return projectLikes;
+    }
+
+    public void setProjectLikes(Long[] projectLikes) {
+        this.projectLikes = projectLikes;
+    }
+
+    public Long[] getProjectApplicants() {
+        return projectApplicants;
+    }
+
+    public void setProjectApplicants(Long[] projectApplicants) {
+        this.projectApplicants = projectApplicants;
     }
 }

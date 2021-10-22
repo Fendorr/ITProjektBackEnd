@@ -2,6 +2,9 @@ package com.restful.api.h2.example.Entity;
 
 
 
+import io.swagger.v3.oas.annotations.media.Content;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,12 +22,19 @@ public class Project {
     String subTitle;
     Date createdAt;
     String createdBy;
+
+    @Column(length=5000)
     String comment;
+
     String note;
-    Long adminID;       //UserID des Admins
+    Long adminId;       //UserID des Admins
+    Long professorId;
     String[] tags;      //Keywords
     Integer maxUser;    //Maximale Mitglieder
     Integer currUser;   //Mitglieder aktuell
+    Long[] members;     //Array der Member user_ids
+    Long[] projectLikes; //Array der user_ids die das Projekt geliked haben (evtl auch später matching algo -> unterscheidung durch 0 oder 1 vor die Id setzen oder so)
+    Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
 
 
     public String getTitle() {
@@ -75,14 +85,6 @@ public class Project {
         this.note = note;
     }
 
-    public Long getAdmin() {
-        return adminID;
-    }
-
-    public void setAdmin(Long admin) {
-        this.adminID = adminID;
-    }
-
     public Long getId() {
         return id;
     }
@@ -113,5 +115,45 @@ public class Project {
 
     public void setCurrUser(Integer currUser) {
         this.currUser = currUser;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
+
+    public Long getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(Long professorId) {
+        this.professorId = professorId;
+    }
+
+    public Long[] getMembers() {
+        return members;
+    }
+
+    public void setMembers(Long[] members) {
+        this.members = members;
+    }
+
+    public Long[] getProjectLikes() {
+        return projectLikes;
+    }
+
+    public void setProjectLikes(Long[] projectLikes) {
+        this.projectLikes = projectLikes;
+    }
+
+    public Long[] getProjectApplicants() {
+        return projectApplicants;
+    }
+
+    public void setProjectApplicants(Long[] projectApplicants) {
+        this.projectApplicants = projectApplicants;
     }
 }
