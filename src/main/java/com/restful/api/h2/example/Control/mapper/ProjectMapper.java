@@ -21,8 +21,12 @@ public class ProjectMapper {
         result.setTags(projDto.getTags());
         result.setMaxUser(projDto.getMaxUser());
         result.setCurrUser(projDto.getCurrUser());
+        result.setAdminId(projDto.getAdminId());
+        result.setProfessorId(projDto.getProfessorId());
+        result.setMembers(projDto.getMembers());
+        result.setProjectLikes(projDto.getProjectLikes());
+        result.setProjectApplicants(projDto.getProjectApplicants());
         return result;
-
     }
 
     public ProjectDTO entityToDto(Project proj){
@@ -37,6 +41,11 @@ public class ProjectMapper {
         result.setTags(proj.getTags());
         result.setMaxUser(proj.getMaxUser());
         result.setCurrUser(proj.getCurrUser());
+        result.setAdminId(proj.getAdminId());
+        result.setProfessorId(proj.getProfessorId());
+        result.setMembers(proj.getMembers());
+        result.setProjectLikes(proj.getProjectLikes());
+        result.setProjectApplicants(proj.getProjectApplicants());
         return result;
     }
 }
