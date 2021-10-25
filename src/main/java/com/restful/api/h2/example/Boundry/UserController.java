@@ -53,10 +53,10 @@ public class UserController {
         }
     }
 
-    @PutMapping(path = "user/{id}")
-    public ResponseEntity<Void> updateUser (@PathVariable(name="id") Long id, @RequestBody UserDTO userDto){
+    @PutMapping(path = "user/{id}/{pw}")
+    public ResponseEntity<Void> updateUser (@PathVariable(name="id") Long id, @RequestBody UserDTO userDto, @PathVariable(name="pw") String pw ){
         try {
-            service.updateUser(id,userDto);
+            service.updateUser(id,userDto, pw);
             return ResponseEntity.ok().build();
         }
         catch(Exception e ) {
