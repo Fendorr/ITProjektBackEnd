@@ -1,8 +1,10 @@
 package com.restful.api.h2.example.Boundry;
 
 
+import com.restful.api.h2.example.Boundry.model.ProjectDTO;
 import com.restful.api.h2.example.Boundry.model.UserDTO;
 import com.restful.api.h2.example.Control.UserService;
+import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="api/")
@@ -21,6 +25,9 @@ public class UserController {
 
     @Autowired
     UserService service;
+
+    @Autowired
+    UserRepo myUserRepo;
 
     @GetMapping(path = "user/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable(name="id") Long id){
@@ -63,5 +70,4 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }
