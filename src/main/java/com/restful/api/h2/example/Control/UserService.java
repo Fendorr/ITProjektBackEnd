@@ -1,10 +1,14 @@
 package com.restful.api.h2.example.Control;
 
 
+import com.restful.api.h2.example.Boundry.model.ProjectDTO;
 import com.restful.api.h2.example.Boundry.model.UserDTO;
 import com.restful.api.h2.example.Control.mapper.UserMapper;
+import com.restful.api.h2.example.Entity.Project;
+import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.User;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
+import org.apache.catalina.util.ToStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,9 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -23,6 +30,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     UserRepo myUserRepo;
+
+    @Autowired
+    ProjectRepo myProjectRepo;
 
     @Autowired
     UserMapper userMapper;

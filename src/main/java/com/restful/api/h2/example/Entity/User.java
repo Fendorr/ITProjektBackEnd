@@ -1,15 +1,18 @@
 package com.restful.api.h2.example.Entity;
 
 
+import com.restful.api.h2.example.Boundry.model.ProjectDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class User implements UserDetails {
@@ -29,6 +32,8 @@ public class User implements UserDetails {
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
     Long[] likedProjects;
+    Long[] projectInvites; //If user is invited to a projects
+    Long[] sentApplications; //All applications users have sent
 
     //region Getter/Setter
     public String getFirstName() {
@@ -145,4 +150,19 @@ public class User implements UserDetails {
         this.likedProjects = likedProjects;
     }
 
+    public Long[] getProjectInvites() {
+        return projectInvites;
+    }
+
+    public void setProjectInvites(Long[] projectInvites) {
+        this.projectInvites = projectInvites;
+    }
+
+    public Long[] getSentApplications() {
+        return sentApplications;
+    }
+
+    public void setSentApplications(Long[] sentApplications) {
+        this.sentApplications = sentApplications;
+    }
 }

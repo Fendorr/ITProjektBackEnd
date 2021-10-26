@@ -4,6 +4,7 @@ package com.restful.api.h2.example.Boundry.model;
 
 import com.restful.api.h2.example.Entity.userType;
 import java.util.Date;
+import java.util.List;
 
 
 public class UserDTO {
@@ -19,6 +20,8 @@ public class UserDTO {
     userType type;          //! s = student, p = professor
     Long activeProject;     //! -> Fremdschlüssel project_id
     Long[] likedProjects;
+    Long[] projectInvites;
+    Long[] sentApplications;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -91,6 +94,22 @@ public class UserDTO {
 
     public void setLikedProjects(Long[] likedProjects) {
         this.likedProjects = likedProjects;
+    }
+
+    public Long[] getProjectInvites() {
+        return projectInvites;
+    }
+
+    public void setProjectInvites(Long[] projectInvites) {
+        this.projectInvites = projectInvites;
+    }
+
+    public Long[] getSentApplications() {
+        return sentApplications;
+    }
+
+    public void setSentApplications(Long[] sentApplications) {
+        this.sentApplications = sentApplications;
     }
 
     //endregion

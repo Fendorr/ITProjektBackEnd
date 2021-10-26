@@ -26,6 +26,8 @@ public class UserMapper {
         result.setType(userDto.getType());
         result.setActiveProject(userDto.getActiveProject());
         result.setLikedProjects(userDto.getLikedProjects());
+        result.setProjectInvites(userDto.getProjectInvites());
+        result.setSentApplications(userDto.getSentApplications());
         return result;
     }
 
@@ -40,6 +42,8 @@ public class UserMapper {
         result.setType(user.getType());
         result.setActiveProject(user.getActiveProject());
         result.setLikedProjects(user.getLikedProjects());
+        result.setProjectInvites(user.getProjectInvites());
+        result.setSentApplications(user.getSentApplications());
         return result;
     }
 }

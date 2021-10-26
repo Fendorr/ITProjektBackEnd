@@ -10,4 +10,5 @@ public interface UserRepo extends CrudRepository<User,Long> {
 
     public User findByEmail(String email);
     public boolean existsByEmail(String email);
+
 }
