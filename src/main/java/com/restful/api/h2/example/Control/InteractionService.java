@@ -151,6 +151,7 @@ public class InteractionService {
                         if(newMembers.length < 1){
                             //delete project if newMembers is empty after admin leave
                             myProjectRepo.delete(project);
+
                             System.out.println("Project has been deleted because it is empty");
                         } else {
                             project.setMembers(newMembers);
@@ -159,18 +160,18 @@ public class InteractionService {
                             project.setAdminId(newMembers[0]);
                             myProjectRepo.save(project);
                             System.out.println("Admin has been removed from project");
-                            //Delete project from old admins' activeProject
-                            if (myUserRepo.existsById(userId)) {
-                                Optional<User> userOptional = myUserRepo.findById(userId);
-                                if (userOptional.isPresent()) {
-                                    User user = userOptional.get();
-                                    user.setActiveProject(null);
-                                    myUserRepo.save(user);
-                                    System.out.println("Users activeProject has been changed");
-                                } else {
-                                    System.out.println("User has not been found.");
-                                    throw new EntityNotFoundException();
-                                }
+                        }
+                        //Delete project from old admins' activeProject
+                        if (myUserRepo.existsById(userId)) {
+                            Optional<User> userOptional = myUserRepo.findById(userId);
+                            if (userOptional.isPresent()) {
+                                User user = userOptional.get();
+                                user.setActiveProject(null);
+                                myUserRepo.save(user);
+                                System.out.println("Users activeProject has been changed");
+                            } else {
+                                System.out.println("User has not been found.");
+                                throw new EntityNotFoundException();
                             }
                         }
                         projContains = true;

@@ -28,10 +28,10 @@ public class ProjectController {
         }
     }
 
-    @PostMapping(path = "project/")
-    public ResponseEntity<URI> postProject (@RequestBody ProjectDTO project) throws URISyntaxException {
+    @PostMapping(path = "project/{id}")
+    public ResponseEntity<URI> postProject (@PathVariable(name="id") Long userId, @RequestBody ProjectDTO project) throws URISyntaxException {
         try {
-            return ResponseEntity.ok(service.postProject(project));
+            return ResponseEntity.ok(service.postProject(userId,project));
         }
         catch(Exception e){
             return ResponseEntity.badRequest().build();
