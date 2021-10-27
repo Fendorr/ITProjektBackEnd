@@ -7,6 +7,7 @@ import com.restful.api.h2.example.Entity.Project;
 import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
+import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,10 @@ public class ProjectService {
     @Autowired
     //@Lazy
     UserRepo myUserRepo;
+
+    @Autowired
+    //@Lazy
+    InteractionService interService;
 
     @Autowired
     ProjectMapper projectMapper;
@@ -51,6 +56,67 @@ public class ProjectService {
 
     public void deleteProject(Long id) {
         if(myProjectRepo.existsById(id)) {
+            Optional<Project> projectOptional = myProjectRepo.findById(id);
+            if(projectOptional.isPresent()) {
+                Project project = projectOptional.get();
+                //DELETE ALL APPLICATIONS IN USERS
+                //go through all users that applied to the project
+                for(Long applicant : project.getProjectApplicants()) {
+                    if(myUserRepo.existsById(applicant)) {
+                        Optional<User> userOptional = myUserRepo.findById(applicant);
+                        if(userOptional.isPresent()) {
+                            //if they exist, get their application array and delete the project id
+                            User user = userOptional.get();
+                            Long[] oldApplications = user.getSentApplications();
+                            Long[] newApplications = interService.deleteIndex(oldApplications, id);
+                            user.setSentApplications(newApplications);
+                            System.out.println("applicants changed");
+                            myUserRepo.save(user);
+                        }
+                        else {
+                            System.out.println("User has not been found.");
+                            throw new EntityNotFoundException();
+                        }
+                    }
+                }
+                //DELETE ALL LIKES IN USERS
+                for(Long like : project.getProjectLikes()) {
+                    if(myUserRepo.existsById(like)) {
+                        Optional<User> userOptional = myUserRepo.findById(like);
+                        if(userOptional.isPresent()) {
+                            User user = userOptional.get();
+                            Long[] oldLikes = user.getLikedProjects();
+                            Long[] newLikes = interService.deleteIndex(oldLikes, id);
+                            user.setLikedProjects(newLikes);
+                            System.out.println("likes changed");
+                            myUserRepo.save(user);
+                        }
+                        else {
+                            System.out.println("User has not been found.");
+                            throw new EntityNotFoundException();
+                        }
+                    }
+                }
+                //DELETE ALL INVITES IN USERS
+                for(Long invite : project.getInvitedUsers()) {
+                    if(myUserRepo.existsById(invite)) {
+                        Optional<User> userOptional = myUserRepo.findById(invite);
+                        if(userOptional.isPresent()) {
+                            User user = userOptional.get();
+                            Long[] oldInvitations = user.getProjectInvites();
+                            Long[] newInvitations = interService.deleteIndex(oldInvitations, id);
+                            user.setProjectInvites(newInvitations);
+                            System.out.println("invites changed");
+                            myUserRepo.save(user);
+                        }
+                        else {
+                            System.out.println("User has not been found.");
+                            throw new EntityNotFoundException();
+                        }
+                    }
+                }
+            }
+            //Finally delete the project
             myProjectRepo.deleteById(id);
         }
         else {
@@ -65,7 +131,7 @@ public class ProjectService {
     }
 
     public ProjectDTO getProjectById(Long id) {
-        // wemm er kein Projekt Findet Exception werfen ( Controller fängt diese dann)
+        // wenn er kein Projekt Findet Exception werfen ( Controller fängt diese dann)
         Project foundProject = myProjectRepo.findById(id).orElseThrow(RuntimeException::new);
         return projectMapper.entityToDto(foundProject);
     }

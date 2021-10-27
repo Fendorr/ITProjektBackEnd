@@ -38,15 +38,11 @@ public class InteractionService {
 
     @Autowired
     @Lazy
+    ProjectService projectService;
+
+    @Autowired
+    @Lazy
     UserMapper userMapper;
-
-    @Autowired
-    @Lazy
-    ProjectMapper projectMapper;
-
-    @Autowired
-    @Lazy
-    PasswordEncoder passwordEncoder;
 
     //This method is called when a User likes a project
     public void likeProject(Long userId, Long projectId){
@@ -150,7 +146,8 @@ public class InteractionService {
                         Long[] newMembers = deleteIndex(members, element);
                         if(newMembers.length < 1){
                             //delete project if newMembers is empty after admin leave
-                            myProjectRepo.delete(project);
+                            // myProjectRepo.delete(project);
+                            projectService.deleteProject(project.getId());
 
                             System.out.println("Project has been deleted because it is empty");
                         } else {
