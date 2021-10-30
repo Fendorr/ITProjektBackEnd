@@ -27,6 +27,7 @@ public class ProjectMapper {
         result.setProjectLikes(projDto.getProjectLikes());
         result.setProjectApplicants(projDto.getProjectApplicants());
         result.setInvitedUsers(projDto.getInvitedUsers());
+        result.setChat(projDto.getChat());
         return result;
     }
 
@@ -48,6 +49,7 @@ public class ProjectMapper {
         result.setProjectLikes(proj.getProjectLikes());
         result.setProjectApplicants(proj.getProjectApplicants());
         result.setInvitedUsers(proj.getInvitedUsers());
+        result.setChat(proj.getChat());
         return result;
     }
 }

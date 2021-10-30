@@ -37,6 +37,9 @@ public class Project {
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
 
+    @Column(length=5000)
+    String[] chat;
+
     public String getTitle() {
         return title;
     }
@@ -163,5 +166,13 @@ public class Project {
 
     public void setInvitedUsers(Long[] invitedUsers) {
         this.invitedUsers = invitedUsers;
+    }
+
+    public String[] getChat() {
+        return chat;
+    }
+
+    public void setChat(String[] chat) {
+        this.chat = chat;
     }
 }

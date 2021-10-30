@@ -26,6 +26,7 @@ public class ProjectDTO {
     Long[] projectLikes; //Array der user_ids die das Projekt geliked haben
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
+    String[] chat;
 
 
     public String getTitle() {
@@ -154,5 +155,13 @@ public class ProjectDTO {
 
     public void setInvitedUsers(Long[] invitedUsers) {
         this.invitedUsers = invitedUsers;
+    }
+
+    public String[] getChat() {
+        return chat;
+    }
+
+    public void setChat(String[] chat) {
+        this.chat = chat;
     }
 }
