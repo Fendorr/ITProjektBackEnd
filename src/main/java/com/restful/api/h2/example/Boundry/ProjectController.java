@@ -59,4 +59,15 @@ public class ProjectController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping(path = "project/{id}")
+    public ResponseEntity<Void> changeProjectPhase (@PathVariable(name="id") Long id, @RequestParam Boolean pushToNext){
+        try{
+            service.changePhase(id, pushToNext);
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

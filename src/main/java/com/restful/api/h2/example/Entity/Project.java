@@ -36,6 +36,8 @@ public class Project {
     Long[] projectLikes; //Array der user_ids die das Projekt geliked haben (evtl auch später matching algo -> unterscheidung durch 0 oder 1 vor die Id setzen oder so)
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
+    projectPhase phase;
+    Boolean isPublic;
 
     @Column(length=5000)
     String[] chat;
@@ -174,5 +176,21 @@ public class Project {
 
     public void setChat(String[] chat) {
         this.chat = chat;
+    }
+
+    public projectPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(projectPhase phase) {
+        this.phase = phase;
+    }
+
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    public void setIsPublic(Boolean aPublic) {
+        isPublic = aPublic;
     }
 }

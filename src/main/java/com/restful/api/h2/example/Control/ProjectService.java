@@ -7,6 +7,7 @@ import com.restful.api.h2.example.Entity.Project;
 import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
+import com.restful.api.h2.example.Entity.projectPhase;
 import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -142,4 +143,50 @@ public class ProjectService {
                 .map(project -> projectMapper.entityToDto(project))
                 .collect(Collectors.toList());
     }
+
+    public void changePhase(Long id, boolean pushToNext){
+        Project projectToPush = myProjectRepo.findById(id).orElseThrow(RuntimeException::new);
+
+        if (pushToNext){
+            switch (projectToPush.getPhase()){
+                case Private:
+                    projectToPush.setPhase(projectPhase.Public);
+                    projectToPush.setIsPublic(true);
+                    break;
+                case Public:
+                    projectToPush.setPhase(projectPhase.Acceptance);
+                    projectToPush.setIsPublic(true);
+                    break;
+                case Acceptance:
+                    projectToPush.setPhase(projectPhase.Active);
+                    projectToPush.setIsPublic(false);
+                    break;
+                case Active:
+                    System.out.println("Cant push project further");
+                    throw new RuntimeException();
+            }
+        }
+        else{
+            switch (projectToPush.getPhase()){
+                case Private:
+                    System.out.println("Cant push project further");
+                    throw new RuntimeException();
+                case Public:
+                    projectToPush.setPhase(projectPhase.Private);
+                    projectToPush.setIsPublic(false);
+                    break;
+                case Acceptance:
+                    projectToPush.setPhase(projectPhase.Public);
+                    projectToPush.setIsPublic(true);
+                    break;
+                case Active:
+                    projectToPush.setPhase(projectPhase.Acceptance);
+                    projectToPush.setIsPublic(true);
+                    break;
+            }
+        }
+
+    }
+
+
 }
