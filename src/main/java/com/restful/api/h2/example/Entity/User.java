@@ -34,7 +34,6 @@ public class User implements UserDetails {
     Long[] likedProjects;
     Long[] projectInvites; //If user is invited to a projects
     Long[] sentApplications; //All applications users have sent
-    Boolean isCurrentProjectAccepted;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -127,14 +126,6 @@ public class User implements UserDetails {
 
     public void setSentApplications(Long[] sentApplications) {
         this.sentApplications = sentApplications;
-    }
-
-    public Boolean getIsCurrentProjectAccepted() {
-        return isCurrentProjectAccepted;
-    }
-
-    public void setIsCurrentProjectAccepted(Boolean currentProjectAccepted) {
-        isCurrentProjectAccepted = currentProjectAccepted;
     }
 
     //endregion

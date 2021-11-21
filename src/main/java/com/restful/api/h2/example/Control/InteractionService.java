@@ -16,12 +16,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -346,29 +348,43 @@ public class InteractionService {
         }
     }
 
-    //Change projectPhase "Acceptance" to "Active" and update user.isCurrentProjectAccepted
     public void acceptProjectAndUpdateUser(Long projectId, Long userId){
         Project projectToAccept = myProjectRepo.findById(projectId).orElseThrow(RuntimeException::new);
+        User userToAdd = myUserRepo.findById(userId).orElseThrow(RuntimeException::new);
 
         if (projectToAccept.getPhase() != projectPhase.Acceptance){
             System.out.println("Project is not in acceptance phase yet");
             throw new RuntimeException();
         }
-        else{
-            User userToUpdate = myUserRepo.findById(userId).orElseThrow(RuntimeException::new);
-
-            if (userToUpdate.getIsCurrentProjectAccepted() == true){
-                System.out.println("User already has an active project");
-                throw new RuntimeException();
-            }
-            else
-                userToUpdate.setIsCurrentProjectAccepted(true);
-
-            myUserRepo.save(userToUpdate);
-            projectToAccept.setPhase(projectPhase.Active);
+        if (userToAdd.getActiveProject() != projectId){
+            System.out.println("User is not member of this project");
+            throw new RuntimeException();
         }
+        else {
+            try{
+                Long[] acceptedMembers = projectToAccept.getAcceptedMembers();
 
-        myProjectRepo.save(projectToAccept);
+                //Initialisiere Long[] als Liste und füge User mit userId hinzu
+                List<Long> acceptedMembersAsList = Arrays.asList(acceptedMembers);
+                acceptedMembersAsList.add(userId);
+
+                //Transformiere zurück zu Long[]
+                Long[] newAcceptedMembers = new Long[acceptedMembersAsList.size()];
+                acceptedMembers = acceptedMembersAsList.toArray(newAcceptedMembers);
+
+                projectToAccept.setAcceptedMembers(acceptedMembers);
+                myProjectRepo.save(projectToAccept);
+
+            }
+            catch (Exception e){
+                //Initialisiere neuen leeren Long[] Array
+                Long[] acceptedMembers = new Long[1];
+                acceptedMembers[0] = userId;
+
+                projectToAccept.setAcceptedMembers(acceptedMembers);
+                myProjectRepo.save(projectToAccept);
+            }
+        }
     }
 
     //Helper method, to delete an index from a <Long> Array.

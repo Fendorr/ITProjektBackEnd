@@ -33,6 +33,7 @@ public class Project {
     Integer maxUser;    //Maximale Mitglieder
     Integer currUser;   //Mitglieder aktuell
     Long[] members;     //Array der Member user_ids
+    Long[] acceptedMembers;
     Long[] projectLikes; //Array der user_ids die das Projekt geliked haben (evtl auch später matching algo -> unterscheidung durch 0 oder 1 vor die Id setzen oder so)
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
@@ -143,6 +144,14 @@ public class Project {
 
     public void setMembers(Long[] members) {
         this.members = members;
+    }
+
+    public Long[] getAcceptedMembers() {
+        return acceptedMembers;
+    }
+
+    public void setAcceptedMembers(Long[] acceptedMembers) {
+        this.acceptedMembers = acceptedMembers;
     }
 
     public Long[] getProjectLikes() {

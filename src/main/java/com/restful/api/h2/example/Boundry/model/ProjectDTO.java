@@ -25,6 +25,7 @@ public class ProjectDTO {
     Integer maxUser;    //Maximale Mitglieder
     Integer currUser;   //Mitglieder aktuell
     Long[] members;     //Array der Member user_ids
+    Long[] acceptedMembers;
     Long[] projectLikes; //Array der user_ids die das Projekt geliked haben
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
@@ -136,6 +137,14 @@ public class ProjectDTO {
 
     public void setMembers(Long[] members) {
         this.members = members;
+    }
+
+    public Long[] getAcceptedMembers() {
+        return acceptedMembers;
+    }
+
+    public void setAcceptedMembers(Long[] acceptedMembers) {
+        this.acceptedMembers = acceptedMembers;
     }
 
     public Long[] getProjectLikes() {

@@ -160,6 +160,8 @@ public class ProjectService {
                     projectToPush.setPhase(projectPhase.Acceptance);
                     break;
                 case Acceptance:
+                    //TODO IMPLEMENTIERE VERGLEICH ACCEPTEDMEMBERS UND MEMBERS
+
                     projectToPush.setPhase(projectPhase.Active);
                     break;
                 case Active:
