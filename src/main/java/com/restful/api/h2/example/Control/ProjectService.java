@@ -38,7 +38,11 @@ public class ProjectService {
     ProjectMapper projectMapper;
 
     public URI postProject(Long userId, ProjectDTO project) throws URISyntaxException {
-        Project createdItem = myProjectRepo.save(projectMapper.dtoToEntity(project));
+        //Project initialisieren und Private-Phase zuweisen
+        Project createdItem = projectMapper.dtoToEntity(project);
+        createdItem.setPhase(projectPhase.Private);
+        myProjectRepo.save(createdItem);
+
         if(myUserRepo.existsById(userId)) {
             Optional<User> userOptional = myUserRepo.findById(userId);
             if(userOptional.isPresent()) {
@@ -151,15 +155,12 @@ public class ProjectService {
             switch (projectToPush.getPhase()){
                 case Private:
                     projectToPush.setPhase(projectPhase.Public);
-                    projectToPush.setIsPublic(true);
                     break;
                 case Public:
                     projectToPush.setPhase(projectPhase.Acceptance);
-                    projectToPush.setIsPublic(true);
                     break;
                 case Acceptance:
                     projectToPush.setPhase(projectPhase.Active);
-                    projectToPush.setIsPublic(false);
                     break;
                 case Active:
                     System.out.println("Cant push project further");
@@ -173,20 +174,16 @@ public class ProjectService {
                     throw new RuntimeException();
                 case Public:
                     projectToPush.setPhase(projectPhase.Private);
-                    projectToPush.setIsPublic(false);
                     break;
                 case Acceptance:
                     projectToPush.setPhase(projectPhase.Public);
-                    projectToPush.setIsPublic(true);
                     break;
                 case Active:
                     projectToPush.setPhase(projectPhase.Acceptance);
-                    projectToPush.setIsPublic(true);
                     break;
             }
         }
 
+        myProjectRepo.save(projectToPush);
     }
-
-
 }

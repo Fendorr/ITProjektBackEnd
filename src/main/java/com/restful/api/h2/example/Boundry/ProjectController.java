@@ -60,7 +60,7 @@ public class ProjectController {
         }
     }
 
-    @PutMapping(path = "project/{id}")
+    @PutMapping(path = "project/{id}/pushPhase")
     public ResponseEntity<Void> changeProjectPhase (@PathVariable(name="id") Long id, @RequestParam Boolean pushToNext){
         try{
             service.changePhase(id, pushToNext);
@@ -70,4 +70,6 @@ public class ProjectController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
 }

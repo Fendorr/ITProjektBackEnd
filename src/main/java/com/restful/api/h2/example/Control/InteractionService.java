@@ -8,6 +8,7 @@ import com.restful.api.h2.example.Entity.Project;
 import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
+import com.restful.api.h2.example.Entity.projectPhase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -343,6 +344,31 @@ public class InteractionService {
                 throw new EntityNotFoundException();
             }
         }
+    }
+
+    //Change projectPhase "Acceptance" to "Active" and update user.isCurrentProjectAccepted
+    public void acceptProjectAndUpdateUser(Long projectId, Long userId){
+        Project projectToAccept = myProjectRepo.findById(projectId).orElseThrow(RuntimeException::new);
+
+        if (projectToAccept.getPhase() != projectPhase.Acceptance){
+            System.out.println("Project is not in acceptance phase yet");
+            throw new RuntimeException();
+        }
+        else{
+            User userToUpdate = myUserRepo.findById(userId).orElseThrow(RuntimeException::new);
+
+            if (userToUpdate.getIsCurrentProjectAccepted() == true){
+                System.out.println("User already has an active project");
+                throw new RuntimeException();
+            }
+            else
+                userToUpdate.setIsCurrentProjectAccepted(true);
+
+            myUserRepo.save(userToUpdate);
+            projectToAccept.setPhase(projectPhase.Active);
+        }
+
+        myProjectRepo.save(projectToAccept);
     }
 
     //Helper method, to delete an index from a <Long> Array.

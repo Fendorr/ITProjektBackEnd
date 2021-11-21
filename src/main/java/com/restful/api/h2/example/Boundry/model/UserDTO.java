@@ -22,6 +22,7 @@ public class UserDTO {
     Long[] likedProjects;
     Long[] projectInvites;
     Long[] sentApplications;
+    Boolean isCurrentProjectAccepted;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -110,6 +111,14 @@ public class UserDTO {
 
     public void setSentApplications(Long[] sentApplications) {
         this.sentApplications = sentApplications;
+    }
+
+    public Boolean getIsCurrentProjectAccepted() {
+        return isCurrentProjectAccepted;
+    }
+
+    public void setIsCurrentProjectAccepted(Boolean currentProjectAccepted) {
+        isCurrentProjectAccepted = currentProjectAccepted;
     }
 
     //endregion

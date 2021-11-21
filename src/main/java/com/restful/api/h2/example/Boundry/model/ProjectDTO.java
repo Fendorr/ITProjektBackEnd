@@ -2,6 +2,8 @@ package com.restful.api.h2.example.Boundry.model;
 
 
 
+import com.restful.api.h2.example.Entity.projectPhase;
+
 import javax.persistence.Column;
 import java.util.Date;
 
@@ -26,6 +28,9 @@ public class ProjectDTO {
     Long[] projectLikes; //Array der user_ids die das Projekt geliked haben
     Long[] projectApplicants; //Array der user_ids die sich direkt auf das Projekt beworben haben
     Long[] invitedUsers;
+    projectPhase phase;
+
+    @Column(length=5000)
     String[] chat;
 
 
@@ -155,6 +160,14 @@ public class ProjectDTO {
 
     public void setInvitedUsers(Long[] invitedUsers) {
         this.invitedUsers = invitedUsers;
+    }
+
+    public projectPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(projectPhase phase) {
+        this.phase = phase;
     }
 
     public String[] getChat() {

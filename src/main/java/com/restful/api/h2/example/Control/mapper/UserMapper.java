@@ -21,13 +21,13 @@ public class UserMapper {
         result.setLastName(userDto.getLastName());
         result.setCreatedAt(new Date());
         result.setEmail(userDto.getEmail());
-        //result.setPassword(passwordEncoder.encode(userDto.getPassword()));
         result.setFaculty(userDto.getFaculty());
         result.setType(userDto.getType());
         result.setActiveProject(userDto.getActiveProject());
         result.setLikedProjects(userDto.getLikedProjects());
         result.setProjectInvites(userDto.getProjectInvites());
         result.setSentApplications(userDto.getSentApplications());
+        result.setIsCurrentProjectAccepted(userDto.getIsCurrentProjectAccepted());
         return result;
     }
 
@@ -44,6 +44,7 @@ public class UserMapper {
         result.setLikedProjects(user.getLikedProjects());
         result.setProjectInvites(user.getProjectInvites());
         result.setSentApplications(user.getSentApplications());
+        result.setIsCurrentProjectAccepted(user.getIsCurrentProjectAccepted());
         return result;
     }
 }

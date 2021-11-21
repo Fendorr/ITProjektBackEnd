@@ -34,6 +34,7 @@ public class User implements UserDetails {
     Long[] likedProjects;
     Long[] projectInvites; //If user is invited to a projects
     Long[] sentApplications; //All applications users have sent
+    Boolean isCurrentProjectAccepted;
 
     //region Getter/Setter
     public String getFirstName() {
@@ -103,6 +104,39 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long[] getLikedProjects() {
+        return likedProjects;
+    }
+
+    public void setLikedProjects(Long[] likedProjects) {
+        this.likedProjects = likedProjects;
+    }
+
+    public Long[] getProjectInvites() {
+        return projectInvites;
+    }
+
+    public void setProjectInvites(Long[] projectInvites) {
+        this.projectInvites = projectInvites;
+    }
+
+    public Long[] getSentApplications() {
+        return sentApplications;
+    }
+
+    public void setSentApplications(Long[] sentApplications) {
+        this.sentApplications = sentApplications;
+    }
+
+    public Boolean getIsCurrentProjectAccepted() {
+        return isCurrentProjectAccepted;
+    }
+
+    public void setIsCurrentProjectAccepted(Boolean currentProjectAccepted) {
+        isCurrentProjectAccepted = currentProjectAccepted;
+    }
+
     //endregion
 
 
@@ -142,27 +176,4 @@ public class User implements UserDetails {
     }
     //endregion
 
-    public Long[] getLikedProjects() {
-        return likedProjects;
-    }
-
-    public void setLikedProjects(Long[] likedProjects) {
-        this.likedProjects = likedProjects;
-    }
-
-    public Long[] getProjectInvites() {
-        return projectInvites;
-    }
-
-    public void setProjectInvites(Long[] projectInvites) {
-        this.projectInvites = projectInvites;
-    }
-
-    public Long[] getSentApplications() {
-        return sentApplications;
-    }
-
-    public void setSentApplications(Long[] sentApplications) {
-        this.sentApplications = sentApplications;
-    }
 }
