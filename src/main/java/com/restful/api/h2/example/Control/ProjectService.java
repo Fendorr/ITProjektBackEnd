@@ -160,9 +160,20 @@ public class ProjectService {
                     projectToPush.setPhase(projectPhase.Acceptance);
                     break;
                 case Acceptance:
-                    //TODO IMPLEMENTIERE VERGLEICH ACCEPTEDMEMBERS UND MEMBERS
+                    Long[] members = projectToPush.getMembers();
+                    Long[] acceptedMembers = projectToPush.getAcceptedMembers();
 
-                    projectToPush.setPhase(projectPhase.Active);
+                    //Arrays vor dem Vergleich sortieren
+                    Arrays.sort(members);
+                    Arrays.sort(acceptedMembers);
+
+                    if (Arrays.deepEquals(members, acceptedMembers)){
+                        projectToPush.setPhase(projectPhase.Active);
+                    }
+                    else{
+                        System.out.println("Not all members accepted");
+                        throw new RuntimeException();
+                    }
                     break;
                 case Active:
                     System.out.println("Cant push project further");

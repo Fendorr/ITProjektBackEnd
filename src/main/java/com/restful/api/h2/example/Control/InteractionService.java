@@ -21,10 +21,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -348,7 +345,7 @@ public class InteractionService {
         }
     }
 
-    public void acceptProjectAndUpdateUser(Long projectId, Long userId){
+    public void acceptProjectAndUpdateAcceptedMembers(Long projectId, Long userId){
         Project projectToAccept = myProjectRepo.findById(projectId).orElseThrow(RuntimeException::new);
         User userToAdd = myUserRepo.findById(userId).orElseThrow(RuntimeException::new);
 
@@ -356,7 +353,7 @@ public class InteractionService {
             System.out.println("Project is not in acceptance phase yet");
             throw new RuntimeException();
         }
-        if (userToAdd.getActiveProject() != projectId){
+        if (userToAdd.getActiveProject().longValue() != projectId){
             System.out.println("User is not member of this project");
             throw new RuntimeException();
         }
@@ -365,7 +362,11 @@ public class InteractionService {
                 Long[] acceptedMembers = projectToAccept.getAcceptedMembers();
 
                 //Initialisiere Long[] als Liste und füge User mit userId hinzu
-                List<Long> acceptedMembersAsList = Arrays.asList(acceptedMembers);
+                List<Long> acceptedMembersAsList = new ArrayList<>(Arrays.asList(acceptedMembers));
+                if (acceptedMembersAsList.contains(userId)){
+                    System.out.println("User already accepted");
+                    throw new RuntimeException();
+                }
                 acceptedMembersAsList.add(userId);
 
                 //Transformiere zurück zu Long[]
@@ -377,6 +378,11 @@ public class InteractionService {
 
             }
             catch (Exception e){
+                //weiterleiten der Exception aus try-block zu Controller
+                List<Long> acceptedMembersAsList = new ArrayList<>(Arrays.asList(projectToAccept.getAcceptedMembers()));
+                if (acceptedMembersAsList.contains(userId))
+                    throw new RuntimeException();
+
                 //Initialisiere neuen leeren Long[] Array
                 Long[] acceptedMembers = new Long[1];
                 acceptedMembers[0] = userId;

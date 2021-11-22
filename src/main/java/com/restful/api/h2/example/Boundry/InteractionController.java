@@ -20,7 +20,7 @@ public class InteractionController {
     InteractionService service;
 
     @PutMapping(path = "likeProject/{id}")
-    public ResponseEntity<Void> likeProject(@RequestParam Long userId,@PathVariable(name="id") Long projectId){
+    public ResponseEntity<Void> likeProject(@RequestBody Long userId,@PathVariable(name="id") Long projectId){
         try {
             service.likeProject(userId, projectId);
             return ResponseEntity.ok().build();
@@ -32,7 +32,7 @@ public class InteractionController {
     }
 
     @PutMapping(path = "addMember/{id}")
-    public ResponseEntity<Void> addMember (@PathVariable(name="id") Long userId, @RequestParam Long projectId){
+    public ResponseEntity<Void> addMember (@PathVariable(name="id") Long userId, @RequestBody Long projectId){
         try {
             service.addMember(userId,projectId);
             return ResponseEntity.ok().build();
@@ -43,7 +43,7 @@ public class InteractionController {
     }
 
     @PutMapping(path = "applyToProject/{id}")
-    public ResponseEntity<Void> applyToProject (@PathVariable(name="id") Long userId, @RequestParam Long projectId){
+    public ResponseEntity<Void> applyToProject (@PathVariable(name="id") Long userId, @RequestBody Long projectId){
         try {
             service.applyToProject(userId,projectId);
             return ResponseEntity.ok().build();
@@ -54,7 +54,7 @@ public class InteractionController {
     }
 
     @PutMapping(path = "inviteUser/{id}")
-    public ResponseEntity<Void> inviteUser (@PathVariable(name="id") Long userId, @RequestParam Long projectId){
+    public ResponseEntity<Void> inviteUser (@PathVariable(name="id") Long userId, @RequestBody Long projectId){
         try {
             service.inviteUser(userId,projectId);
             return ResponseEntity.ok().build();
@@ -67,7 +67,7 @@ public class InteractionController {
     @PutMapping(path = "acceptProjectAndUpdateAcceptedMembers/projectId/{projectId}/userId/{userId}")
     public ResponseEntity<Void> acceptProjectAndUpdateAcceptedMembers(@PathVariable(name="projectId") Long projectId, @PathVariable(name="userId") Long userId){
         try{
-            service.acceptProjectAndUpdateUser(projectId,userId);
+            service.acceptProjectAndUpdateAcceptedMembers(projectId,userId);
             return  ResponseEntity.ok().build();
         }
         catch (Exception e){
