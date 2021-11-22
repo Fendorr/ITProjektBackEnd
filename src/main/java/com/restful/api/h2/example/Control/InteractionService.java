@@ -8,6 +8,7 @@ import com.restful.api.h2.example.Entity.Project;
 import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
+import com.restful.api.h2.example.Entity.projectPhase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +16,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -341,6 +341,54 @@ public class InteractionService {
             else {
                 System.out.println("Project has not been found.");
                 throw new EntityNotFoundException();
+            }
+        }
+    }
+
+    public void acceptProjectAndUpdateAcceptedMembers(Long projectId, Long userId){
+        Project projectToAccept = myProjectRepo.findById(projectId).orElseThrow(RuntimeException::new);
+        User userToAdd = myUserRepo.findById(userId).orElseThrow(RuntimeException::new);
+
+        if (projectToAccept.getPhase() != projectPhase.Acceptance){
+            System.out.println("Project is not in acceptance phase yet");
+            throw new RuntimeException();
+        }
+        if (userToAdd.getActiveProject().longValue() != projectId){
+            System.out.println("User is not member of this project");
+            throw new RuntimeException();
+        }
+        else {
+            try{
+                Long[] acceptedMembers = projectToAccept.getAcceptedMembers();
+
+                //Initialisiere Long[] als Liste und füge User mit userId hinzu
+                List<Long> acceptedMembersAsList = new ArrayList<>(Arrays.asList(acceptedMembers));
+                if (acceptedMembersAsList.contains(userId)){
+                    System.out.println("User already accepted");
+                    throw new RuntimeException();
+                }
+                acceptedMembersAsList.add(userId);
+
+                //Transformiere zurück zu Long[]
+                Long[] newAcceptedMembers = new Long[acceptedMembersAsList.size()];
+                acceptedMembers = acceptedMembersAsList.toArray(newAcceptedMembers);
+
+                projectToAccept.setAcceptedMembers(acceptedMembers);
+                myProjectRepo.save(projectToAccept);
+
+            }
+            catch (Exception e){
+                //weiterleiten der Exception aus try-block zu Controller
+                List<Long> acceptedMembersAsList = new ArrayList<>(Arrays.asList(projectToAccept.getAcceptedMembers()));
+                if (acceptedMembersAsList.contains(userId))
+                    throw new RuntimeException();
+
+                //Initialisiere neuen leeren Long[] Array
+                Long[] acceptedMembers = new Long[1];
+                acceptedMembers[0] = userId;
+
+                projectToAccept.setAcceptedMembers(acceptedMembers);
+                myProjectRepo.save(projectToAccept);
             }
         }
     }
