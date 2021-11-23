@@ -22,10 +22,10 @@ public class UserDTO {
     Long[] likedProjects;
     Long[] projectInvites;
     Long[] sentApplications;
+
     String[] tags;      //Keywords
 
     Boolean isCurrentProjectAccepted;
-
 
     //region Getter/Setter
     public String getFirstName() {
@@ -130,7 +130,6 @@ public class UserDTO {
 
     public void setIsCurrentProjectAccepted(Boolean currentProjectAccepted) {
         isCurrentProjectAccepted = currentProjectAccepted;
-
     }
 
     //endregion
