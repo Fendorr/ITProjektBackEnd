@@ -34,7 +34,6 @@ public class User implements UserDetails {
     Long[] likedProjects;
     Long[] projectInvites; //If user is invited to a projects
     Long[] sentApplications; //All applications users have sent
-    String[] tags;      //Keywords
 
     //region Getter/Setter
     public String getFirstName() {
@@ -51,14 +50,6 @@ public class User implements UserDetails {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String[] getTags() {
-        return tags;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
     }
 
     public String getEmail() {
