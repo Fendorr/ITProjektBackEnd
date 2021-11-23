@@ -22,6 +22,7 @@ public class UserDTO {
     Long[] likedProjects;
     Long[] projectInvites;
     Long[] sentApplications;
+    String[] tags;      //Keywords
 
     //region Getter/Setter
     public String getFirstName() {
@@ -110,6 +111,14 @@ public class UserDTO {
 
     public void setSentApplications(Long[] sentApplications) {
         this.sentApplications = sentApplications;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 
     //endregion
