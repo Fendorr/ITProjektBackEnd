@@ -112,6 +112,31 @@ public class User implements UserDetails {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long[] getLikedProjects() {
+        return likedProjects;
+    }
+
+    public void setLikedProjects(Long[] likedProjects) {
+        this.likedProjects = likedProjects;
+    }
+
+    public Long[] getProjectInvites() {
+        return projectInvites;
+    }
+
+    public void setProjectInvites(Long[] projectInvites) {
+        this.projectInvites = projectInvites;
+    }
+
+    public Long[] getSentApplications() {
+        return sentApplications;
+    }
+
+    public void setSentApplications(Long[] sentApplications) {
+        this.sentApplications = sentApplications;
+    }
+
     //endregion
 
 
@@ -151,27 +176,4 @@ public class User implements UserDetails {
     }
     //endregion
 
-    public Long[] getLikedProjects() {
-        return likedProjects;
-    }
-
-    public void setLikedProjects(Long[] likedProjects) {
-        this.likedProjects = likedProjects;
-    }
-
-    public Long[] getProjectInvites() {
-        return projectInvites;
-    }
-
-    public void setProjectInvites(Long[] projectInvites) {
-        this.projectInvites = projectInvites;
-    }
-
-    public Long[] getSentApplications() {
-        return sentApplications;
-    }
-
-    public void setSentApplications(Long[] sentApplications) {
-        this.sentApplications = sentApplications;
-    }
 }

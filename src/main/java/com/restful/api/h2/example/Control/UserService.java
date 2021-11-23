@@ -63,7 +63,7 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void updateUser(Long id,UserDTO userDto, String password) {
+    public void updateUser(Long id, UserDTO userDto, String password) {
         User userToUpdate = userMapper.dtoToEntity(userDto);
         userToUpdate.setId(id);
         userToUpdate.setPassword(passwordEncoder.encode(password)); //passwort explizit hier setzen, sodass es nicht im Dto vorhanden ist

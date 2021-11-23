@@ -7,6 +7,7 @@ import com.restful.api.h2.example.Entity.Project;
 import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
+import com.restful.api.h2.example.Entity.projectPhase;
 import org.apache.tomcat.util.http.fileupload.MultipartStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -37,7 +38,11 @@ public class ProjectService {
     ProjectMapper projectMapper;
 
     public URI postProject(Long userId, ProjectDTO project) throws URISyntaxException {
-        Project createdItem = myProjectRepo.save(projectMapper.dtoToEntity(project));
+        //Project initialisieren und Private-Phase zuweisen
+        Project createdItem = projectMapper.dtoToEntity(project);
+        createdItem.setPhase(projectPhase.Private);
+        myProjectRepo.save(createdItem);
+
         if(myUserRepo.existsById(userId)) {
             Optional<User> userOptional = myUserRepo.findById(userId);
             if(userOptional.isPresent()) {
@@ -141,5 +146,57 @@ public class ProjectService {
         return StreamSupport.stream(foundProjects.spliterator(), false) //TODO schaut euch fürs Verständniss die Java Streaming API an :)
                 .map(project -> projectMapper.entityToDto(project))
                 .collect(Collectors.toList());
+    }
+
+    public void changePhase(Long id, boolean pushToNext){
+        Project projectToPush = myProjectRepo.findById(id).orElseThrow(RuntimeException::new);
+
+        if (pushToNext){
+            switch (projectToPush.getPhase()){
+                case Private:
+                    projectToPush.setPhase(projectPhase.Public);
+                    break;
+                case Public:
+                    projectToPush.setPhase(projectPhase.Acceptance);
+                    break;
+                case Acceptance:
+                    Long[] members = projectToPush.getMembers();
+                    Long[] acceptedMembers = projectToPush.getAcceptedMembers();
+
+                    //Arrays vor dem Vergleich sortieren
+                    Arrays.sort(members);
+                    Arrays.sort(acceptedMembers);
+
+                    if (Arrays.deepEquals(members, acceptedMembers)){
+                        projectToPush.setPhase(projectPhase.Active);
+                    }
+                    else{
+                        System.out.println("Not all members accepted");
+                        throw new RuntimeException();
+                    }
+                    break;
+                case Active:
+                    System.out.println("Cant push project further");
+                    throw new RuntimeException();
+            }
+        }
+        else{
+            switch (projectToPush.getPhase()){
+                case Private:
+                    System.out.println("Cant push project further");
+                    throw new RuntimeException();
+                case Public:
+                    projectToPush.setPhase(projectPhase.Private);
+                    break;
+                case Acceptance:
+                    projectToPush.setPhase(projectPhase.Public);
+                    break;
+                case Active:
+                    projectToPush.setPhase(projectPhase.Acceptance);
+                    break;
+            }
+        }
+
+        myProjectRepo.save(projectToPush);
     }
 }

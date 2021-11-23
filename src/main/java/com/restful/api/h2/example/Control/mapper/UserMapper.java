@@ -21,7 +21,6 @@ public class UserMapper {
         result.setLastName(userDto.getLastName());
         result.setCreatedAt(new Date());
         result.setEmail(userDto.getEmail());
-        //result.setPassword(passwordEncoder.encode(userDto.getPassword()));
         result.setFaculty(userDto.getFaculty());
         result.setType(userDto.getType());
         result.setActiveProject(userDto.getActiveProject());

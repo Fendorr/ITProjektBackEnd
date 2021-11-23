@@ -25,7 +25,7 @@ public class InteractionController {
             service.likeProject(userId, projectId);
             return ResponseEntity.ok().build();
         }
-        catch(Exception e ) {
+        catch(Exception e) {
             return ResponseEntity.badRequest().build();
         }
 
@@ -37,7 +37,7 @@ public class InteractionController {
             service.addMember(userId,projectId);
             return ResponseEntity.ok().build();
         }
-        catch(Exception e ) {
+        catch(Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -48,7 +48,7 @@ public class InteractionController {
             service.applyToProject(userId,projectId);
             return ResponseEntity.ok().build();
         }
-        catch(Exception e ) {
+        catch(Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -59,7 +59,18 @@ public class InteractionController {
             service.inviteUser(userId,projectId);
             return ResponseEntity.ok().build();
         }
-        catch(Exception e ) {
+        catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping(path = "acceptProjectAndUpdateAcceptedMembers/projectId/{projectId}/userId/{userId}")
+    public ResponseEntity<Void> acceptProjectAndUpdateAcceptedMembers(@PathVariable(name="projectId") Long projectId, @PathVariable(name="userId") Long userId){
+        try{
+            service.acceptProjectAndUpdateAcceptedMembers(projectId,userId);
+            return  ResponseEntity.ok().build();
+        }
+        catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
     }
