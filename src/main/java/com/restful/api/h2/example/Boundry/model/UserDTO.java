@@ -122,6 +122,7 @@ public class UserDTO {
 
     public void setTags(String[] tags) {
         this.tags = tags;
+    }
 
     public Boolean getIsCurrentProjectAccepted() {
         return isCurrentProjectAccepted;
