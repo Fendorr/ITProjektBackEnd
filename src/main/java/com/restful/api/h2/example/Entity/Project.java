@@ -20,7 +20,7 @@ public class Project {
 
     String title;
     String subTitle;
-    Date createdAt;
+    String createdAt;
     String createdBy;
 
     @Column(length=5000)
@@ -58,11 +58,11 @@ public class Project {
         this.subTitle = subTitle;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

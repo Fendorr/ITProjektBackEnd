@@ -121,7 +121,7 @@ public class ProjectService {
                     }
                 }
             }
-            //Finally delete the project
+            //Finally, delete the project
             myProjectRepo.deleteById(id);
         }
         else {
