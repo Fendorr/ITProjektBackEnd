@@ -26,6 +26,9 @@ public class User implements UserDetails {
     String lastName;
     String email;
 
+    @Column(length=5000)
+    String description;
+
     String password;        //! pw muss gehashed und gesalted sein -> wsl im DTO
     String faculty;
 
@@ -67,6 +70,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String email) {
+        this.email = description;
     }
 
     public void setPassword(String password) {
@@ -136,6 +147,8 @@ public class User implements UserDetails {
     public void setSentApplications(Long[] sentApplications) {
         this.sentApplications = sentApplications;
     }
+
+
 
     //endregion
 
