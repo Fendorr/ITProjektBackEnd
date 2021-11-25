@@ -76,8 +76,8 @@ public class User implements UserDetails {
         return description;
     }
 
-    public void setDescription(String email) {
-        this.email = description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setPassword(String password) {
