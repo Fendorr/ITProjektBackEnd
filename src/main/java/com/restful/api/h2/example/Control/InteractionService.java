@@ -378,11 +378,6 @@ public class InteractionService {
 
             }
             catch (Exception e){
-                //weiterleiten der Exception aus try-block zu Controller
-                List<Long> acceptedMembersAsList = new ArrayList<>(Arrays.asList(projectToAccept.getAcceptedMembers()));
-                if (acceptedMembersAsList.contains(userId))
-                    throw new RuntimeException();
-
                 //Initialisiere neuen leeren Long[] Array
                 Long[] acceptedMembers = new Long[1];
                 acceptedMembers[0] = userId;
