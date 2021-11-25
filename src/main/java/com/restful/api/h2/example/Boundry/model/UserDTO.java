@@ -3,6 +3,8 @@ package com.restful.api.h2.example.Boundry.model;
 
 
 import com.restful.api.h2.example.Entity.userType;
+
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,9 @@ public class UserDTO {
     String firstName;
     String lastName;
     String email;
+
+    @Column(length=5000)
+    String description;
 
     String faculty;
     userType type;          //! s = student, p = professor
@@ -64,6 +69,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String email) {
+        this.email = description;
     }
 
     public userType getType() {
