@@ -9,6 +9,7 @@ import com.restful.api.h2.example.Entity.Repository.ProjectRepo;
 import com.restful.api.h2.example.Entity.Repository.UserRepo;
 import com.restful.api.h2.example.Entity.User;
 import com.restful.api.h2.example.Entity.projectPhase;
+import com.restful.api.h2.example.Entity.userType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -120,10 +121,15 @@ public class InteractionService {
                 boolean projContains = false;
                 for (Long element : members) {
                     //Only delete if user IS NOT ADMIN!!!
-                    if (element.equals(userId) && !userId.equals(project.getAdminId())) {
-                        Long[] newMembers = deleteIndex(members, element);
-                        project.setMembers(newMembers);
-                        project.setCurrUser(newMembers.length);
+                    if (element.equals(userId) || userId.equals(project.getProfessorId()) && !userId.equals(project.getAdminId())) {
+                        if(userId.equals(project.getProfessorId())) {
+                            project.setProfessorId(null);
+                        }
+                        else {
+                            Long[] newMembers = deleteIndex(members, element);
+                            project.setMembers(newMembers);
+                            project.setCurrUser(newMembers.length);
+                        }
                         myProjectRepo.save(project);
                         System.out.println("User has been removed from project members");
                         //Delete project from users' activeProject
@@ -180,12 +186,24 @@ public class InteractionService {
                         System.out.println("Project is already full");
                     }
                     else {
-                        Long[] newMembers = Arrays.copyOf(members, members.length + 1);
-                        newMembers[newMembers.length - 1] = userId;
-                        project.setMembers(newMembers);
-                        project.setCurrUser(newMembers.length);
-                        myProjectRepo.save(project);
-                        System.out.println("User" + userId + " has been added to project members");
+                        if(myUserRepo.existsById(userId)) {
+                            Optional<User> userOpt = myUserRepo.findById(userId);
+                            if (userOpt.isPresent()) {
+                                User user = userOpt.get();
+
+                                if(user.getType() == userType.Professor) {
+                                    project.setProfessorId(userId);
+                                }
+                                else {
+                                    Long[] newMembers = Arrays.copyOf(members, members.length + 1);
+                                    newMembers[newMembers.length - 1] = userId;
+                                    project.setMembers(newMembers);
+                                    project.setCurrUser(newMembers.length);
+                                    myProjectRepo.save(project);
+                                    System.out.println("User" + userId + " has been added to project members");
+                                }
+                            }
+                        }
 
                         //Add project to users' activeProject
                         if (myUserRepo.existsById(userId)) {

@@ -12,7 +12,7 @@ public class ProjectDTO {
     Long id;
     String title;
     String subTitle;
-    Date createdAt;
+    String createdAt;
     String createdBy;
 
     @Column(length=5000)
@@ -51,11 +51,11 @@ public class ProjectDTO {
         this.subTitle = subTitle;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

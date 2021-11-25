@@ -5,6 +5,7 @@ import com.restful.api.h2.example.Boundry.model.ProjectDTO;
 import com.restful.api.h2.example.Entity.Project;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -13,7 +14,9 @@ public class ProjectMapper {
     public Project dtoToEntity(ProjectDTO projDto){
         Project result = new Project();
         result.setComment(projDto.getComment());
-        result.setCreatedAt(new Date());
+        result.setCreatedAt(
+                new SimpleDateFormat("yyyyMMdd").format(new Date())
+        );
         result.setNote(projDto.getNote());
         result.setTitle(projDto.getTitle());
         result.setCreatedBy(projDto.getCreatedBy());
