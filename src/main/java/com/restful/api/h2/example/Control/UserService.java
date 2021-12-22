@@ -64,9 +64,16 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateUser(Long id, UserDTO userDto, String password) {
+
         User userToUpdate = userMapper.dtoToEntity(userDto);
         userToUpdate.setId(id);
-        userToUpdate.setPassword(passwordEncoder.encode(password)); //passwort explizit hier setzen, sodass es nicht im Dto vorhanden ist
+        if(password!=null && !password.equals("") && !password.equals("undefined")) {
+            userToUpdate.setPassword(passwordEncoder.encode(password)); //passwort explizit hier setzen, sodass es nicht im Dto vorhanden ist
+        }
+        else {
+            User user = myUserRepo.findById(id).orElseThrow(RuntimeException::new);
+            userToUpdate.setPassword(user.getPassword()); //falls kein Passwort beim Updateuser angegeben ist, wird das alte gesetzt
+        }
         myUserRepo.save(userToUpdate);
     }
 

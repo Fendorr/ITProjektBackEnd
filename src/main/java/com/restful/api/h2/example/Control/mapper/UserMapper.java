@@ -15,12 +15,14 @@ public class UserMapper {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public User dtoToEntity(UserDTO userDto){
+    public User dtoToEntity(UserDTO userDto) {
         User result = new User();
         result.setFirstName(userDto.getFirstName());
         result.setLastName(userDto.getLastName());
         result.setCreatedAt(new Date());
-        result.setEmail(userDto.getEmail());
+        if (userDto.getEmail() != null || userDto.getEmail() != "undefined") {
+            result.setEmail(userDto.getEmail());
+        }
         result.setDescription(userDto.getDescription());
         result.setFaculty(userDto.getFaculty());
         result.setType(userDto.getType());
@@ -32,7 +34,7 @@ public class UserMapper {
         return result;
     }
 
-    public UserDTO entityToDto(User user){
+    public UserDTO entityToDto(User user) {
         UserDTO result = new UserDTO();
         result.setFirstName(user.getFirstName());
         result.setLastName(user.getLastName());
